@@ -1,0 +1,101 @@
+/**
+ * md-mouse-hold
+ * Version: 0.0.1
+ * Author:  Mike Deroche (http://mikederoche.com, https://github.com/mderoche)
+ * License: MIT
+ */
+(function (angular) {
+  angular
+    .module('md.mouseHold', [])
+    .directive('mdMouseHold', function ($parse, $interval, $timeout) {
+      return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+          var fn = $parse(attrs.mdMouseHold),
+            pr,
+            timer,
+            tickas;
+          
+          // maps mouse button strings to IDs used by jqLite
+          var buttonMap = {
+            left: 0,
+            middle: 1,
+            right: 2
+          };
+          
+          // default options
+          var options = {
+            delay: 5,
+            onRelease: function (duration) {},
+            buttons: [buttonMap.left]
+          };
+          
+          var runFn = function () {
+            fn(scope, {
+              ticks: ticks++
+            });
+          };
+          
+          // determines if a button is allowed to be held
+          var isValidButton = function (btn) {
+            if (options.buttons === 'all') {
+              return true;
+            };
+            
+            var buttons = [];
+            angular.forEach(options.buttons, function (button) {
+              if (typeof button === 'string') {
+                buttons.push(buttonMap[button]);
+              } else {
+                buttons.push(button);
+              }
+            });
+            
+            return ~buttons.indexOf(btn);  
+          };
+          
+          // watch for option changes and update if needed
+          attrs.$observe('mdMouseHoldOptions', function (opts) {
+            var newOptions = $parse(opts)(scope);
+            
+            for (var o in newOptions) {
+              options[o] = newOptions[o];
+            }
+          });
+          
+          // start tracking on mousedown
+          element.on('mousedown', function (e) {
+            if (!isValidButton(e.button)) {
+              return;
+            }
+            
+            element.addClass('md-mouse-hold-holding');
+
+            ticks = 0;
+            timer = (new Date()).getTime();
+            
+            $timeout(function () {
+              runFn();
+            }, 0);
+            
+            pr = $interval(function () {
+              runFn();
+            }, options.delay);
+          });
+          
+          // finish tracking on mouseup
+          element.on('mouseup', function (e) {
+            if (!isValidButton(e.button) || pr === undefined) {
+              return;
+            }
+
+            element.removeClass('md-mouse-hold-holding');
+            $interval.cancel(pr);
+
+            var now = (new Date()).getTime();
+            options.onRelease(now - timer);
+          });
+        }
+      };
+    });
+})(angular);

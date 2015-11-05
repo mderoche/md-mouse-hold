@@ -1,0 +1,30 @@
+{
+  "generator-angularjs-library": {
+    "props": {
+      "author": {
+        "name": "mderoche",
+        "email": "tangiblelime@gmail.com"
+      },
+      "libraryName": {
+        "original": "md-mouse-hold",
+        "camelized": "mdMouseHold",
+        "dasherized": "md-mouse-hold",
+        "slugified": "md-mouse-hold",
+        "parts": [
+          "md",
+          "mouse",
+          "hold"
+        ]
+      },
+      "includeModuleDirectives": false,
+      "includeModuleFilters": false,
+      "includeModuleServices": false,
+      "includeAngularModuleResource": false,
+      "includeAngularModuleCookies": false,
+      "includeAngularModuleSanitize": false,
+      "librarySrcDirectory": "src/md-mouse-hold",
+      "libraryUnitTestDirectory": "test/unit/md-mouse-hold",
+      "libraryUnitE2eDirectory": "test/e2e/md-mouse-hold"
+    }
+  }
+}
