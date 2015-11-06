@@ -12,3 +12,4 @@ libpeerconnection.log
 /.tmp
 /.sass-cache
 /bower_components
+test.html

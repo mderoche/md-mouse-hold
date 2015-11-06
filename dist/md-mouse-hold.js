@@ -83,8 +83,8 @@
             }, options.delay);
           });
           
-          // finish tracking on mouseup
-          element.on('mouseup', function (e) {
+          // handler for all release events
+          var release = function (e) {
             if (!isValidButton(e.button) || pr === undefined) {
               return;
             }
@@ -94,7 +94,11 @@
 
             var now = (new Date()).getTime();
             options.onRelease(now - timer);
-          });
+          }
+          
+          // finish tracking on mouseup
+          element.on('mouseup', release);
+          element.on('mouseleave', release);
         }
       };
     });

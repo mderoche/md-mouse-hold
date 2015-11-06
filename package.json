@@ -1,9 +1,8 @@
 {
   "name": "md-mouse-hold",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": {
-    "name": "mderoche",
-    "email": "tangiblelime@gmail.com"
+    "name": "mderoche"
   },
   "dependencies": {},
   "devDependencies": {
@@ -11,6 +10,7 @@
     "chai-jquery": "^1.2.3",
     "gulp": "^3.8.7",
     "gulp-concat": "^2.3.4",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-jshint": "^1.8.4",
     "gulp-plumber": "^0.6.6",
     "gulp-rename": "^1.2.0",
