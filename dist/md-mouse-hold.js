@@ -1,6 +1,6 @@
 /**
  * md-mouse-hold
- * Version: 0.0.1
+ * Version: 1.0.0
  * Author:  Mike Deroche (http://mikederoche.com, https://github.com/mderoche)
  * License: MIT
  */
@@ -30,6 +30,7 @@
             buttons: [buttonMap.left]
           };
           
+          // executes the holding function
           var runFn = function () {
             fn(scope, {
               ticks: ticks++
@@ -57,7 +58,6 @@
           // watch for option changes and update if needed
           attrs.$observe('mdMouseHoldOptions', function (opts) {
             var newOptions = $parse(opts)(scope);
-            
             for (var o in newOptions) {
               options[o] = newOptions[o];
             }
@@ -74,10 +74,12 @@
             ticks = 0;
             timer = (new Date()).getTime();
             
+            // execute the first iteration of the holding function
             $timeout(function () {
               runFn();
             }, 0);
-            
+
+            // continuously run the holding function
             pr = $interval(function () {
               runFn();
             }, options.delay);
